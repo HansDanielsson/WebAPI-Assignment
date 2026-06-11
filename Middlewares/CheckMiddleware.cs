@@ -10,7 +10,9 @@ public sealed class CheckMiddleware(RequestDelegate next)
   private static readonly string[] ExcludedPaths = [
     "/login",
     "/register",
-    "/user"
+    "/user",
+    "/openapi",
+    "/scalar"
     ];
 
   public async Task InvokeAsync(HttpContext context, UserManager<User> userManager)

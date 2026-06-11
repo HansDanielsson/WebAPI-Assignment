@@ -2,111 +2,96 @@
 
 Advanced programming assignment in #C at MedieInstitutet
 
-
-
 \# Inlämningsuppgift
 
+Detta är ett system som ska hantera anteckningar. Man kan gruppera anteckningar i olika kategorier.
+
+Det finns 2 färdiga användare
+admin@test.com, Lösen: Admin123!
+hans@test.com, Lösen: Test123!
 
 
-Detta projekt är startpunkten för din inlämingsuppgift. Ni behöver skapa ett eget api som är skyddat med hjälp av api-nycklar. Ni skall definiera resurser (data) som skall kunna skickas från ert api efter att en användare gör ett korrekt anrop och inkluderar sin api-nyckel. 
+Test först med att logga in med en färdig användare:
+Body:
+{
+    "email" : "admin@test.com",
+    "password" : "Admin123!"
+}
 
+/login
 
+Nya användare registreras på /register
+Body:
+{
+    "email" : "newuser@test.com",
+    "password" : "Pass123!"
+}
 
-\## Användarregistrering
+\---
 
-\- En användare ska kunna registrera sig i systemet.
+Hämta API-nyckel för att sätta en header-variabel: x-api-key
+/user/userapikey
 
-\- Användaren ska kunna logga in.
+\---
 
-\- Du väljer inloggningsstrategi:
+Det finns 3 st kategorier
+Snabb, Hemma och Borta
 
-&#x20; - Individuella konton (med e-post och lösenord)
+Det finns 3 st anteckningar
+Titel: Mat			Notering: Dags att köpa mat	K: Snabb
+Titel: Saker		Notering: Att köpa					K: Hemma
+Titel: Kläder		Notering: Blå byxor					K: Borta
 
+\##Hantering av kategorier:
+Get:
+Lista alla: /categories
+En: /categories/{id}
 
+Post:
+Lägga till: /categories
+{
+    "name" : "Namn på kategori"
+}
 
-\## API-nyckel
+Lägger till en notering: /categories/{id}/notes/{Notering-id}
 
-\- Efter registrering och inloggning ska användaren kunna begära en API-nyckel.
+Put:
+Ändra: /categories/{id}
+{
+    "name" : "Uppdatera namnet"
+}
 
-\- API-nyckeln ska sparas i databasen och kopplas till användaren.
+Del:
+Ta bort: /categories/{id}
 
+\##Hantering av anteckningar
+Get:
+Lista all: /notes
+En: /notes/{id}
 
+Post:
+Lägga till: /notes
+{
+    "title" : "Titel på noteringen",
+    "content" : "Innehåll",
+    "categoryid" : "{Kategori-id}"
+}
 
-\## Skyddade API-slutpunkter med CRUD-funktionalitet
+Ändra kategori på noteringen: /notes/{id}/category/{Kategori-id}
 
-\- Du ska skapa minst en resurs (t.ex. recept, sportresultat, speldata, personliga anteckningar) som användaren kan hantera via CRUD:
+Put:
+Ändra: /notes/{id}
+{
+    "title" : "Titel på noteringen",
+    "content" : "Innehåll",
+    "categoryid" : "{Kategori-id}"
+}
 
-&#x20; - Create – Lägga till data.
+Del:
+Ta bort: /notes/{id}
 
-&#x20; - Read – Hämta data.
+Regler:
+Man kan bara ändra/ta bort/använda sina egna poster som man har skapat.
+Man får förvisso se alla anda men bara förändra sina egna!
 
-&#x20; - Update – Ändra befintlig data.
-
-&#x20; - Delete – Ta bort data.
-
-\- Alla CRUD-operationer ska kräva giltig API-nyckel.
-
-\- API-nyckeln ska skickas med i anropet och valideras innan data returneras eller ändras.
-
-
-
-\## Databas
-
-\- Du väljer:
-
-&#x20; - Entity Framework + SQL
-
-
-
-\## Betygsättning
-
-Denna uppgift bedöms med IG (icke godkänd), G (godkänd) och VG (Väl Godkänt).
-
-
-
-\### För godkänt (G) krävs:
-
-\- Användare kan registrera sig och logga in.
-
-\- Användare kan begära och få en API-nyckel.
-
-\- CRUD-funktionalitet finns för vald resurs och är skyddad med API-nyckel.
-
-\- API-nyckeln valideras korrekt vid varje anrop.
-
-\- Databasen fungerar enligt vald lösning (SQL med EF).
-
-\- Ni använder kontroller som endpoints och hanterar logiken i dessa.
-
-\- Korrekta svarskoder skickas från ditt API.
-
-
-
-\### För Väl godkänt (VG) krävs:
-
-\- Samtliga punkter från G
-
-\- Ni har valt en komplex struktur av data att returnera och använder er av DTO:er för att begränsa informationen.
-
-\- Ni använder designmönster med tjänster och repositories
-
-\- Ni använder korrekt validering och har skapat minst en egen validering (custom validation).
-
-\- En fungerande Swagger
-
-
-
-\## Inlämning
-
-\- En länk till ett GitHub-repo på itslearning
-
-\- Bifoga en README.md som beskriver:
-
-&#x20; - Hur projektet startas.
-
-&#x20; - Hur man registrerar en användare och får en API-nyckel.
-
-&#x20; - Exempel på anrop till de skyddade CRUD-slutpunkterna.
-
-
-
+När man testar får man vara extra noga med alla nycklar/id

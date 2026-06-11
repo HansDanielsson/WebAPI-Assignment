@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using WebAPI_Assignment.Contexts;
 using WebAPI_Assignment.Middlewares;
 using WebAPI_Assignment.Models;
@@ -128,6 +129,7 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
   app.MapOpenApi();
+  app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
