@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI_Assignment.Models;
 using WebAPI_Assignment.Models.Dtos;
 using WebAPI_Assignment.Models.Requests;
 using WebAPI_Assignment.Services;
