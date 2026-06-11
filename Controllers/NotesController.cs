@@ -16,7 +16,7 @@ public class NotesController(INoteService service) : ControllerBase
   private readonly INoteService _service = service;
 
   [HttpPost]
-  public async Task<ActionResult<Note>> Add([FromBody] CreateNoteRequest item)
+  public async Task<ActionResult<NoteDto>> Add([FromBody] CreateNoteRequest item)
   {
     try
     {

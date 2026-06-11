@@ -11,7 +11,7 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
   private readonly INoteRepository _repository = repository;
   private readonly IMapper _mapper = mapper;
 
-  public async Task<Note?> Add(CreateNoteRequest item, string userName)
+  public async Task<NoteDto?> Add(CreateNoteRequest item, string userName)
   {
     if (await _repository.Exists(item, userName))
     {
@@ -19,7 +19,7 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
     }
 
     var itemDb = new Note(item.Title, item.Content, item.CategoryId) { UserId = userName };
-    return await _repository.Add(itemDb);
+    return _mapper.Map<NoteDto>(await _repository.Add(itemDb));
   }
 
   public async Task<Note?> AddItem(string id, string itemId, string userName)
