@@ -36,7 +36,7 @@ public class NotesController(INoteService service) : ControllerBase
   }
 
   [HttpPost("{id}/category/{itemId}")]
-  public async Task<ActionResult<Note>> AddItem(string id, string itemId)
+  public async Task<ActionResult<NoteDto>> AddItem(string id, string itemId)
   {
     try
     {
@@ -93,7 +93,7 @@ public class NotesController(INoteService service) : ControllerBase
   }
 
   [HttpPut("{id}")]
-  public async Task<ActionResult<Note>> Update(string id, [FromBody] CreateNoteRequest item)
+  public async Task<ActionResult<NoteDto>> Update(string id, [FromBody] CreateNoteRequest item)
   {
     try
     {

@@ -22,7 +22,7 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
     return _mapper.Map<NoteDto>(await _repository.Add(itemDb));
   }
 
-  public async Task<Note?> AddItem(string id, string itemId, string userName)
+  public async Task<NoteDto?> AddItem(string id, string itemId, string userName)
   {
     var item = await _repository.GetById(id);
     if (item is null || !string.Equals(item.UserId, userName, StringComparison.OrdinalIgnoreCase))
@@ -30,7 +30,7 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
       return null;
     }
 
-    return await _repository.AddItem(id, itemId);
+    return _mapper.Map<NoteDto>(await _repository.AddItem(id, itemId));
   }
 
   public async Task<Note?> Delete(string id, string userName)
@@ -43,21 +43,11 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
     return await _repository.Delete(id);
   }
 
-  public async Task<List<NoteDto>> GetAll()
-  {
-    var items = await _repository.GetAll();
+  public async Task<List<NoteDto>> GetAll() => _mapper.Map<List<NoteDto>>(await _repository.GetAll());
 
-    return _mapper.Map<List<NoteDto>>(items);
-  }
+  public async Task<NoteDto> GetById(string id) => _mapper.Map<NoteDto>(await _repository.GetById(id));
 
-  public async Task<NoteDto> GetById(string id)
-  {
-    var item = await _repository.GetById(id);
-
-    return _mapper.Map<NoteDto>(item);
-  }
-
-  public async Task<Note?> Update(string id, CreateNoteRequest item, string userName)
+  public async Task<NoteDto?> Update(string id, CreateNoteRequest item, string userName)
   {
     var oldItem = await _repository.GetById(id);
     if (oldItem is null || !string.Equals(oldItem.UserId, userName, StringComparison.Ordinal))
@@ -69,6 +59,6 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
     oldItem.Content = item.Content;
     oldItem.CategoryId = item.CategoryId;
 
-    return await _repository.Update(id, oldItem);
+    return _mapper.Map<NoteDto>(await _repository.Update(id, oldItem));
   }
 }

@@ -16,7 +16,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   private readonly ICategoryService _service = service;
 
   [HttpPost]
-  public async Task<ActionResult<Category>> Add([FromBody] CreateCategoryRequest item)
+  public async Task<ActionResult<CategoryDto>> Add([FromBody] CreateCategoryRequest item)
   {
     try
     {
@@ -36,7 +36,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   }
 
   [HttpPost("{id}/notes/{itemId}")]
-  public async Task<ActionResult<Category>> AddItem(string id, string itemId)
+  public async Task<ActionResult<CategoryDto>> AddItem(string id, string itemId)
   {
     try
     {

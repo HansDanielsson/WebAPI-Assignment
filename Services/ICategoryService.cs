@@ -6,8 +6,8 @@ namespace WebAPI_Assignment.Services;
 
 public interface ICategoryService
 {
-  Task<Category?> Add(CreateCategoryRequest item, string userName);
-  Task<Category?> AddItem(string id, string itemId, string userName);
+  Task<CategoryDto?> Add(CreateCategoryRequest item, string userName);
+  Task<CategoryDto?> AddItem(string id, string itemId, string userName);
   Task<Category?> Delete(string id, string userName);
   Task<List<CategoryDto>> GetAll();
   Task<CategoryDto> GetById(string id);
