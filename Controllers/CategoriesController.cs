@@ -93,7 +93,7 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   }
 
   [HttpPut("{id}")]
-  public async Task<ActionResult<Category>> Update(string id, [FromBody] CreateCategoryRequest item)
+  public async Task<ActionResult<CategoryDto>> Update(string id, [FromBody] CreateCategoryRequest item)
   {
     try
     {

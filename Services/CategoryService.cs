@@ -57,7 +57,7 @@ public class CategoryService(ICategoryRepository repository, IMapper mapper) : I
     return _mapper.Map<CategoryDto>(item);
   }
 
-  public async Task<Category?> Update(string id, CreateCategoryRequest item, string userName)
+  public async Task<CategoryDto?> Update(string id, CreateCategoryRequest item, string userName)
   {
     var oldItem = await _repository.GetById(id);
     if (oldItem is null || !string.Equals(oldItem.UserId, userName, StringComparison.Ordinal))
@@ -67,6 +67,6 @@ public class CategoryService(ICategoryRepository repository, IMapper mapper) : I
 
     oldItem.Name = item.Name;
 
-    return await _repository.Update(id, oldItem);
+    return _mapper.Map<CategoryDto>(await _repository.Update(id, oldItem));
   }
 }

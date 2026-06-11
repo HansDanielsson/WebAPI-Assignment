@@ -11,5 +11,5 @@ public interface ICategoryService
   Task<Category?> Delete(string id, string userName);
   Task<List<CategoryDto>> GetAll();
   Task<CategoryDto> GetById(string id);
-  Task<Category?> Update(string id, CreateCategoryRequest item, string userName);
+  Task<CategoryDto?> Update(string id, CreateCategoryRequest item, string userName);
 }
