@@ -28,7 +28,7 @@ builder.Services.AddIdentityApiEndpoints<User>(options =>
 }).AddRoles<IdentityRole>()
   .AddEntityFrameworkStores<IdentityContext>();
 
-builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options => options.BearerTokenExpiration = TimeSpan.FromMinutes(5));
+builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options => options.BearerTokenExpiration = TimeSpan.FromMinutes(10));
 
 builder.Services.AddAuthorization();
 

@@ -13,11 +13,6 @@ public class NoteRepository(ApplicationDbContext context) : INoteRepository
   {
     try
     {
-      var exists = await _context.Notes.AnyAsync(s => s.Title == item.Title);
-      if (exists)
-      {
-        return null;
-      }
       var result = await _context.Notes.AddAsync(item);
       var change = await _context.SaveChangesAsync();
 

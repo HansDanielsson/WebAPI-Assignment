@@ -22,7 +22,16 @@ public class CategoryService(ICategoryRepository repository, IMapper mapper) : I
     return await _repository.Add(itemDb);
   }
 
-  public async Task<Category?> AddItem(string id, string itemId) => await _repository.AddItem(id, itemId);
+  public async Task<Category?> AddItem(string id, string itemId, string userName)
+  {
+    var item = await _repository.GetById(id);
+    if (item is null || !string.Equals(item.UserId, userName, StringComparison.OrdinalIgnoreCase))
+    {
+      return null;
+    }
+
+    return await _repository.AddItem(id, itemId);
+  }
 
   public async Task<Category?> Delete(string id, string userName)
   {

@@ -35,12 +35,18 @@ public class CategoriesController(ICategoryService service) : ControllerBase
     }
   }
 
-  [HttpPost("{id}/{itemId}")]
+  [HttpPost("{id}/notes/{itemId}")]
   public async Task<ActionResult<Category>> AddItem(string id, string itemId)
   {
     try
     {
-      var result = await _service.AddItem(id, itemId);
+      var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (userName is null)
+      {
+        return Unauthorized("Fel att skapa ny post med användare");
+      }
+
+      var result = await _service.AddItem(id, itemId, userName);
       return result is null ? NotFound("Fel att ändra") : result;
     }
     catch (Exception ex)
