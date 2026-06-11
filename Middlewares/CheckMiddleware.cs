@@ -48,7 +48,7 @@ public sealed class CheckMiddleware(RequestDelegate next)
 
     if (!string.Equals(user.ApiKey, apiKey, StringComparison.Ordinal))
     {
-      await Unauthorized(context, "Invalid API key");
+      await Unauthorized(context, $"Invalid API key, User:{user}, U.key: {user.ApiKey}, head key: {apiKey}");
       return;
     }
     await next(context);

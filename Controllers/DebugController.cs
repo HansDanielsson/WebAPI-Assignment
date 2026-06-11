@@ -9,12 +9,10 @@ namespace WebAPI_Assignment.Controllers;
 [Route("[controller]")]
 public class DebugController(IdentityContext context) : ControllerBase
 {
-  private readonly IdentityContext _context = context;
 
   [HttpGet]
   public async Task<ActionResult<List<User>>> GetUser()
   {
-    var users = await _context.Users.ToListAsync();
-    return users;
+    return await context.Users.ToListAsync();
   }
 }

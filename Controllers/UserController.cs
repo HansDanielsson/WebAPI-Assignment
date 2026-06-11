@@ -16,12 +16,12 @@ public class UserController(UserManager<User> userManager) : ControllerBase
   [HttpPost("userapikey")]
   public async Task<ActionResult<string>> UserApiKey()
   {
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    if (userId is null)
+    var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    if (userName is null)
     {
       return Unauthorized("User not found");
     }
-    var user = await _userManager.FindByIdAsync(userId);
+    var user = await _userManager.FindByIdAsync(userName);
     if (user is null)
     {
       return Unauthorized("User not found");
@@ -42,9 +42,8 @@ public class UserController(UserManager<User> userManager) : ControllerBase
   }
 
   [HttpPost("userid")]
-  public async Task<IActionResult> UserId()
+  public async Task<ActionResult<string?>> UserId()
   {
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    return Ok(userId);
+    return Ok(User.FindFirstValue(ClaimTypes.NameIdentifier));
   }
 }
