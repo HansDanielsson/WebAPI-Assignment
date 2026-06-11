@@ -6,10 +6,10 @@ namespace WebAPI_Assignment.Services;
 
 public interface INoteService
 {
-  Task<Note?> Add(CreateNoteRequest item, string userId);
+  Task<Note?> Add(CreateNoteRequest item, string userName);
   Task<Note?> AddItem(string id, string itemId);
-  Task<Note?> Delete(string id);
+  Task<Note?> Delete(string id, string userName);
   Task<List<NoteDto>> GetAll();
   Task<NoteDto> GetById(string id);
-  Task<Note?> Update(string id, CreateNoteRequest item);
+  Task<Note?> Update(string id, CreateNoteRequest item, string userName);
 }

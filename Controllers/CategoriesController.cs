@@ -20,13 +20,13 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   {
     try
     {
-      var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-      if (userId is null)
+      var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (userName is null)
       {
         return Unauthorized("Fel att skapa ny post med användare");
       }
 
-      var result = await _service.Add(item, userId);
+      var result = await _service.Add(item, userName);
       return result is null ? Conflict("Fel att skapa ny post") : CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
     catch (Exception ex)
@@ -54,7 +54,13 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   {
     try
     {
-      var item = await _service.Delete(id);
+      var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (userName is null)
+      {
+        return Unauthorized("Fel att skapa ny post med användare");
+      }
+
+      var item = await _service.Delete(id, userName);
       return item is null ? NotFound("Fel att ta bort") : NoContent();
     }
     catch (Exception ex)
@@ -85,7 +91,13 @@ public class CategoriesController(ICategoryService service) : ControllerBase
   {
     try
     {
-      var result = await _service.Update(id, item);
+      var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      if (userName is null)
+      {
+        return Unauthorized("Fel att Uppdatera med användare");
+      }
+
+      var result = await _service.Update(id, item, userName);
       return result is null ? NotFound("Fel att Uppdatera") : result;
     }
     catch (Exception ex)
