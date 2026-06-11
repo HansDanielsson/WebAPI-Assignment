@@ -68,7 +68,7 @@ public class NoteService(INoteRepository repository, IMapper mapper) : INoteServ
     oldItem.Title = item.Title;
     oldItem.Content = item.Content;
     oldItem.CategoryId = item.CategoryId;
-    
+
     return await _repository.Update(id, oldItem);
   }
 }
