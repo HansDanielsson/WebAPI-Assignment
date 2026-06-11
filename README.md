@@ -32,6 +32,7 @@ Titel: Saker		Notering: Att köpa					K: Hemma
 Titel: Kläder		Notering: Blå byxor					K: Borta
 
 \##Hantering av kategorier:
+
 Get:
 Lista alla: /categories
 En: /categories/{id}
@@ -49,7 +50,8 @@ Put:
 Del:
 Ta bort: /categories/{id}
 
-\##Hantering av anteckningar
+\##Hantering av anteckningar:
+
 Get:
 Lista all: /notes
 En: /notes/{id}
