@@ -9,7 +9,7 @@ public interface INoteRepository
   Task<Note?> AddItem(string id, string itemId);
   Task<Note?> Delete(string id);
   Task<bool> Exists(CreateNoteRequest item, string userId);
-  Task<List<Note>> GetAll();
-  Task<Note?> GetById(string id);
+  Task<List<Note>> GetAll(string userId);
+  Task<Note?> GetById(string id, string userId);
   Task<Note?> Update(string id, Note item);
 }

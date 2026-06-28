@@ -9,26 +9,39 @@ namespace WebAPI_Assignment.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Authorize]
-public class UserController(UserManager<User> userManager) : ControllerBase
+public class UserController(UserManager<User> userManager) : ApiBaseController
 {
   private readonly UserManager<User> _userManager = userManager;
 
   [HttpPost("userapikey")]
   public async Task<ActionResult<string>> UserApiKey()
   {
-    var userName = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    if (userName is null)
-    {
-      return Unauthorized("User not found");
-    }
-    var user = await _userManager.FindByIdAsync(userName);
+
+    var user = await _userManager.FindByIdAsync(UserId);
     if (user is null)
     {
-      return Unauthorized("User not found");
+      return Unauthorized();
     }
     user.ApiKey = Guid.NewGuid().ToString();
-    await _userManager.UpdateAsync(user);
-    return user.ApiKey;
+
+    var result = await _userManager.UpdateAsync(user);
+    if (!result.Succeeded)
+    {
+      return Problem(title: "Failed to update API key",
+        statusCode: StatusCodes.Status500InternalServerError);
+    }
+    return Ok(user.ApiKey);
+  }
+
+  [HttpGet("userapikey")]
+  public async Task<ActionResult<string>> GetApiKey()
+  {
+    var user = await _userManager.FindByIdAsync(UserId);
+    if (user is null)
+    {
+      return Unauthorized();
+    }
+    return Ok(user.ApiKey);
   }
 
   [HttpPost("userclaims")]
@@ -42,7 +55,7 @@ public class UserController(UserManager<User> userManager) : ControllerBase
   }
 
   [HttpPost("userid")]
-  public async Task<ActionResult<string?>> UserId()
+  public async Task<ActionResult<string?>> GetCurrentUserId()
   {
     return Ok(User.FindFirstValue(ClaimTypes.NameIdentifier));
   }

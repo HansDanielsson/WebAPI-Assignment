@@ -6,6 +6,7 @@ using Scalar.AspNetCore;
 using WebAPI_Assignment.Contexts;
 using WebAPI_Assignment.Middlewares;
 using WebAPI_Assignment.Models;
+using WebAPI_Assignment.OpenApi;
 using WebAPI_Assignment.Repositories;
 using WebAPI_Assignment.Services;
 
@@ -13,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options => options.AddDocumentTransformer<ApiKeyDocumentTransformer>());
 
 // ---> Addera olika tjänster <---
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("MyDb"));
@@ -29,7 +30,7 @@ builder.Services.AddIdentityApiEndpoints<User>(options =>
 }).AddRoles<IdentityRole>()
   .AddEntityFrameworkStores<IdentityContext>();
 
-builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options => options.BearerTokenExpiration = TimeSpan.FromMinutes(10));
+builder.Services.Configure<BearerTokenOptions>(IdentityConstants.BearerScheme, options => options.BearerTokenExpiration = TimeSpan.FromMinutes(20));
 
 builder.Services.AddAuthorization();
 
@@ -84,35 +85,17 @@ using (var scope = app.Services.CreateScope())
   }
   await userManager.AddToRoleAsync(userId, "User");
 
-  var cate1 = new Category("Snabb")
-  {
-    UserId = userId.Id
-  };
-  var cate2 = new Category("Hemma")
-  {
-    UserId = userId.Id
-  };
-  var cate3 = new Category("Borta")
-  {
-    UserId = userId.Id
-  };
+  var cate1 = new Category("Snabb", userId.Id);
+  var cate2 = new Category("Hemma", userId.Id);
+  var cate3 = new Category("Borta", userId.Id);
 
-  var not1 = new Note("Mat", "Dags att köpa mat", cate1.Id)
-  {
-    UserId = userId.Id
-  };
-  var not2 = new Note("Saker", "Att köpa", cate2.Id)
-  {
-    UserId = userId.Id
-  };
-  var not3 = new Note("Kläder", "Blå byxor", cate3.Id)
-  {
-    UserId = userId.Id
-  };
+  var not1 = new Note("Mat", "Dags att köpa mat", cate1.Id, userId.Id);
+  var not2 = new Note("Saker", "Att köpa", cate2.Id, userId.Id);
+  var not3 = new Note("Kläder", "Blå byxor", cate3.Id, userId.Id);
 
   cate1.Notes.Add(not1);
-  cate2.Notes.Add(not2);
-  cate3.Notes.Add(not3);
+  cate1.Notes.Add(not2);
+  cate2.Notes.Add(not3);
 
   if (!await dbcontext.Categories.AnyAsync())
   {
@@ -122,6 +105,7 @@ using (var scope = app.Services.CreateScope())
   if (!await dbcontext.Notes.AnyAsync())
   {
     await dbcontext.Notes.AddRangeAsync(not1, not2, not3);
+    await dbcontext.SaveChangesAsync();
   }
 }
 
@@ -133,6 +117,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication();
 app.MapIdentityApi<User>();
 app.UseMiddleware<CheckMiddleware>();

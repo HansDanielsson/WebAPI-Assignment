@@ -11,45 +11,25 @@ public class NoteRepository(ApplicationDbContext context) : INoteRepository
 
   public async Task<Note?> Add(Note item)
   {
-    try
-    {
-      var result = await _context.Notes.AddAsync(item);
-      var change = await _context.SaveChangesAsync();
+    var result = await _context.Notes.AddAsync(item);
+    await _context.SaveChangesAsync();
 
-      return (change > 0) ? result.Entity : null;
-    }
-    catch
-    {
-      return null;
-    }
+    return result.Entity;
   }
 
   public async Task<Note?> AddItem(string id, string itemId)
   {
-    try
-    {
-      var result = await _context.Notes.Include(s => s.Category).FirstOrDefaultAsync(s => s.Id == id);
-      if (result is null)
-      {
-        return null;
-      }
-
-      var item = await _context.Categories.FindAsync(itemId);
-      if (item is null)
-      {
-        return null;
-      }
-
-      result.CategoryId = itemId;
-
-      var changes = await _context.SaveChangesAsync();
-
-      return (changes > 0) ? result : null;
-    }
-    catch
+    var result = await _context.Notes.FindAsync(id);
+    if (result is null)
     {
       return null;
     }
+
+    result.CategoryId = itemId;
+
+    await _context.SaveChangesAsync();
+
+    return result;
   }
 
   public async Task<Note?> Delete(string id)
@@ -66,9 +46,9 @@ public class NoteRepository(ApplicationDbContext context) : INoteRepository
 
   public async Task<bool> Exists(CreateNoteRequest item, string userId) => await _context.Notes.AnyAsync(s => s.Title == item.Title && s.UserId == userId);
 
-  public async Task<List<Note>> GetAll() => await _context.Notes.Include(i => i.Category).Include(u => u.User).ToListAsync();
+  public async Task<List<Note>> GetAll(string userId) => await _context.Notes.Where(s => s.UserId == userId).Include(i => i.Category).Include(u => u.User).ToListAsync();
 
-  public async Task<Note?> GetById(string id) => await _context.Notes.Include(i => i.Category).Include(u => u.User).FirstOrDefaultAsync(s => s.Id == id);
+  public async Task<Note?> GetById(string id, string userId) => await _context.Notes.Where(s => s.Id == id && s.UserId == userId).Include(i => i.Category).Include(u => u.User).FirstOrDefaultAsync();
 
   public async Task<Note?> Update(string id, Note item)
   {

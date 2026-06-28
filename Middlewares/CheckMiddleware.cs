@@ -1,20 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using WebAPI_Assignment.Constants;
 using WebAPI_Assignment.Models;
 
 namespace WebAPI_Assignment.Middlewares;
 
-public sealed class CheckMiddleware(RequestDelegate next)
+public sealed class CheckMiddleware(RequestDelegate next, ILogger<CheckMiddleware> logger)
 {
-  private const string ApiKeyHeader = "X-Api-Key";
-
-  private static readonly string[] ExcludedPaths = [
-    "/login",
-    "/register",
-    "/user",
-    "/openapi",
-    "/scalar"
-    ];
-
   public async Task InvokeAsync(HttpContext context, UserManager<User> userManager)
   {
     if (ShouldSkip(context.Request.Path))
@@ -42,22 +33,31 @@ public sealed class CheckMiddleware(RequestDelegate next)
       return;
     }
 
-    if (!context.Request.Headers.TryGetValue(ApiKeyHeader, out var apiKey) || string.IsNullOrWhiteSpace(apiKey))
+    if (!context.Request.Headers.TryGetValue(ApiConstants.ApiKeyHeader, out var apiKey) || string.IsNullOrWhiteSpace(apiKey))
     {
-      await Unauthorized(context, $"Header {ApiKeyHeader} is missing");
+      // Generic response; do no leak why
+      logger.LogWarning("Header {HeaderName} is missing", ApiConstants.ApiKeyHeader);
+      await Unauthorized(context, "Header is missing");
       return;
     }
 
     if (!string.Equals(user.ApiKey, apiKey, StringComparison.Ordinal))
     {
-      await Unauthorized(context, $"Invalid API key, User:{user}, U.key: {user.ApiKey}, head key: {apiKey}");
+      // Generic response; do not leak why
+      logger.LogWarning(
+        "Invalid API key, User:{User}, UserKey: {UserKey}, HeaderKey: {HeaderKey}",
+        user,
+        user.ApiKey,
+        apiKey);
+      await Unauthorized(context, "Invalid API key");
       return;
     }
     await next(context);
   }
 
-  private static bool ShouldSkip(PathString path) =>
-    ExcludedPaths.Any(p => path.StartsWithSegments(p, StringComparison.OrdinalIgnoreCase));
+  private static bool ShouldSkip(PathString path) => ApiConstants.ExcludedPaths.Any(p =>
+                                                      path.Value?.Equals(p, StringComparison.OrdinalIgnoreCase) == true ||
+                                                      path.Value?.StartsWith(p + "/", StringComparison.OrdinalIgnoreCase) == true);
 
   private sealed record ErrorResponse(string Message);
 

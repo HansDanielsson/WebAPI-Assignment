@@ -6,57 +6,48 @@ using WebAPI_Assignment.Repositories;
 
 namespace WebAPI_Assignment.Services;
 
-public class CategoryService(ICategoryRepository repository, IMapper mapper) : ICategoryService
+public class CategoryService(ICategoryRepository categoryRepo, IMapper mapper) : ICategoryService
 {
-  private readonly ICategoryRepository _repository = repository;
+  private readonly ICategoryRepository _categoryRepository = categoryRepo;
   private readonly IMapper _mapper = mapper;
 
-  public async Task<CategoryDto?> Add(CreateCategoryRequest item, string userName)
+  public async Task<CategoryDto?> Add(CreateCategoryRequest item, string userId)
   {
-    if (await _repository.Exists(item, userName))
+    if (await _categoryRepository.Exists(item, userId))
     {
       return null;
     }
 
-    var itemDb = new Category(item.Name) { UserId = userName };
-    return _mapper.Map<CategoryDto>(await _repository.Add(itemDb));
+    var itemDb = new Category(item.Name, userId);
+    return _mapper.Map<CategoryDto>(await _categoryRepository.Add(itemDb));
   }
 
-  public async Task<CategoryDto?> AddItem(string id, string itemId, string userName)
+  public async Task<CategoryDto?> AddItem(string id, string itemId, string userId) => _mapper.Map<CategoryDto>(await _categoryRepository.AddItem(id, itemId, userId));
+
+  public async Task<Category?> Delete(string id, string userId)
   {
-    var item = await _repository.GetById(id);
-    if (item is null || !string.Equals(item.UserId, userName, StringComparison.OrdinalIgnoreCase))
+    var item = await _categoryRepository.GetById(id, userId);
+    if (item is null)
     {
       return null;
     }
-
-    return _mapper.Map<CategoryDto>(await _repository.AddItem(id, itemId));
+    return await _categoryRepository.Delete(id);
   }
 
-  public async Task<Category?> Delete(string id, string userName)
+  public async Task<List<CategoryDto>> GetAll(string userId) => _mapper.Map<List<CategoryDto>>(await _categoryRepository.GetAll(userId));
+
+  public async Task<CategoryDto> GetById(string id, string userId) => _mapper.Map<CategoryDto>(await _categoryRepository.GetById(id, userId));
+
+  public async Task<CategoryDto?> Update(string id, CreateCategoryRequest item, string userId)
   {
-    var item = await _repository.GetById(id);
-    if (item is null || !string.Equals(item.UserId, userName, StringComparison.OrdinalIgnoreCase))
-    {
-      return null;
-    }
-    return await _repository.Delete(id);
-  }
-
-  public async Task<List<CategoryDto>> GetAll() => _mapper.Map<List<CategoryDto>>(await _repository.GetAll());
-
-  public async Task<CategoryDto> GetById(string id) => _mapper.Map<CategoryDto>(await _repository.GetById(id));
-
-  public async Task<CategoryDto?> Update(string id, CreateCategoryRequest item, string userName)
-  {
-    var oldItem = await _repository.GetById(id);
-    if (oldItem is null || !string.Equals(oldItem.UserId, userName, StringComparison.Ordinal))
+    var oldItem = await _categoryRepository.GetById(id, userId);
+    if (oldItem is null)
     {
       return null;
     }
 
     oldItem.Name = item.Name;
 
-    return _mapper.Map<CategoryDto>(await _repository.Update(id, oldItem));
+    return _mapper.Map<CategoryDto>(await _categoryRepository.Update(id, oldItem));
   }
 }

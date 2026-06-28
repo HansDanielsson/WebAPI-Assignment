@@ -1,0 +1,1138 @@
+{
+  "info": {
+    "_postman_id": "554112f1-ece2-4ea8-89a0-ca66c989aac8",
+    "name": "WebAPI-Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39793409"
+  },
+  "item": [
+    {
+      "name": "SecureApi",
+      "item": [
+        {
+          "name": "RegisterUser hans2@",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"hans2@test.com\",\r\n    \"password\" : \"T2est123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/register",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "RegisterUser hans3@",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"hans3@test.com\",\r\n    \"password\" : \"T3est123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/register",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login hans@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set(\"accessToken\", response.accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"hans@test.com\",\r\n    \"password\" : \"Test123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/login",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserApiKey hans@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add hans@category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"hans@user-kategory\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login hans2@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set(\"accessToken\", response.accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"hans2@test.com\",\r\n    \"password\" : \"T2est123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/login",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserApiKey hans2@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add hans2@category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"hans2@user-kategory\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login hans3@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set(\"accessToken\", response.accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"hans3@test.com\",\r\n    \"password\" : \"T3est123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/login",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserApiKey hans3@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add hans3@category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"hans3@user-kategory\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login admin@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "pm.environment.set(\"accessToken\", response.accessToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"admin@test.com\",\r\n    \"password\" : \"Admin123!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/login",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserApiKey admin@",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add admin@category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"admin@user-kategory\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll admin@category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll admin@note",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/notes",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"3hejhoKa3456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddItem",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/categories/2ccae403-d594-436c-9271-7ace29ebb5b5/notes/58482099-1e69-4ca0-91b0-81d7534449f0",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories",
+                "2ccae403-d594-436c-9271-7ace29ebb5b5",
+                "notes",
+                "58482099-1e69-4ca0-91b0-81d7534449f0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/categories/dc5d3bcf-9bef-4854-bf58-fbbe43b6a550",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories",
+                "dc5d3bcf-9bef-4854-bf58-fbbe43b6a550"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/categories",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetById",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/categories/0de18947-b6c5-4cb0-82d7-b5638f506b73",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories",
+                "0de18947-b6c5-4cb0-82d7-b5638f506b73"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Kategory update\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/categories/1609a1f1-bf21-4242-84a3-e418eb9a485a",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "categories",
+                "1609a1f1-bf21-4242-84a3-e418eb9a485a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Note",
+      "item": [
+        {
+          "name": "Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\" : \"T42nytest\",\r\n    \"content\" : \"T452nytest\",\r\n    \"categoryid\" : \"6105bded-692d-491b-a3e1-1e8f1d4582bc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/notes",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AddItem",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/notes/03065fe0-a212-474f-81da-9eef7807136d/category/abe193f9-04a1-4c48-931b-31ce2bda3e7f",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes",
+                "03065fe0-a212-474f-81da-9eef7807136d",
+                "category",
+                "abe193f9-04a1-4c48-931b-31ce2bda3e7f"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/notes/123",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes",
+                "123"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetAll",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/notes",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetById",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/notes/2f92e114-733e-4902-b525-572e973b3b01",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes",
+                "2f92e114-733e-4902-b525-572e973b3b01"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\" : \"Kategory update\",\r\n    \"content\" : \"innehåll\",\r\n    \"categoryid\" : \"bf61c150-3ada-4495-b14a-8d84cc336a74\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://localhost:7098/notes/9d8959cc-242f-4a9d-89dd-048392d8e063",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "notes",
+                "9d8959cc-242f-4a9d-89dd-048392d8e063"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Debug",
+      "item": [
+        {
+          "name": "GetUser",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{xapikey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://localhost:7098/debug",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "debug"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "UserApiKey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();\r",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserApiKey",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const apiKey = pm.response.text();\r",
+                  "pm.environment.set(\"xapikey\", apiKey);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userapikey",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userapikey"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserClaims",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userclaims",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userclaims"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UserId",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://localhost:7098/user/userid",
+              "protocol": "https",
+              "host": [
+                "localhost"
+              ],
+              "port": "7098",
+              "path": [
+                "user",
+                "userid"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

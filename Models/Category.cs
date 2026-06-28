@@ -3,7 +3,7 @@ namespace WebAPI_Assignment.Models;
 /// <summary>
 /// Användare kan skapa egna kategorier till anteckningar
 /// </summary>
-public class Category(string name)
+public class Category(string name, string userId)
 {
   /// <summary>
   /// Kategorinyckel
@@ -18,7 +18,7 @@ public class Category(string name)
   /// <summary>
   /// Koppling till Användar Id
   /// </summary>
-  public string? UserId { get; set; }
+  public string UserId { get; init; } = userId;
 
   /// <summary>
   /// Användare

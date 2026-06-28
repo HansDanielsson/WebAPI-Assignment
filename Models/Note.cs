@@ -3,7 +3,7 @@ namespace WebAPI_Assignment.Models;
 /// <summary>
 /// Användare kan skapa egna anteckningar
 /// </summary>
-public class Note(string title, string content, string categoryId)
+public class Note(string title, string content, string categoryId, string userId)
 {
   /// <summary>
   /// Anteckningsnyckel
@@ -33,7 +33,7 @@ public class Note(string title, string content, string categoryId)
   /// <summary>
   /// Primärnyckel till Användar Id
   /// </summary>
-  public string? UserId { get; set; }
+  public string UserId { get; init; } = userId;
 
   /// <summary>
   /// Användare

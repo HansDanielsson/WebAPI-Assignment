@@ -1,18 +1,22 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI_Assignment.Contexts;
-using WebAPI_Assignment.Models;
+using WebAPI_Assignment.Models.Dtos;
 
 namespace WebAPI_Assignment.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DebugController(IdentityContext context) : ControllerBase
+[Authorize(Roles = "Admin")]
+public class DebugController(IdentityContext context, IMapper mapper) : ControllerBase
 {
 
   [HttpGet]
-  public async Task<ActionResult<List<User>>> GetUser()
+  public async Task<ActionResult<List<UserDto>>> GetUser()
   {
-    return await context.Users.ToListAsync();
+    var users = await context.Users.ToListAsync();
+    return Ok(mapper.Map<List<UserDto>>(users));
   }
 }
